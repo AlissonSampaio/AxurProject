@@ -1,40 +1,30 @@
+import clsx from "clsx";
+
 export enum ButtonVariant {
-  primary,
-  secondary,
-  text,
+  default,
+  danger,
 }
 
-type ButtonProps = {
-  label: string;
-  isLoading?: boolean;
+export type ButtonProps = {
   onClick: () => void;
-  className?: string;
-  mx?: number;
-  mt?: number;
-  mb?: number;
+  label: string;
+  variant?: ButtonVariant;
 };
 
-export const Button = ({
+export const Button: React.FC<ButtonProps> = ({
   label,
   onClick,
-  className,
-  isLoading,
-  mx = 32,
-  mt,
-  mb,
-}: ButtonProps) => {
-  return (
-    <button
-      onClick={onClick}
-      className={className}
-      style={{
-        marginTop: mt && mt / 4 + "rem",
-        marginBottom: mb && mb / 4 + "rem",
-        marginLeft: mx && mx / 4 + "rem",
-        marginRight: mx && mx / 4 + "rem",
-      }}
-    >
-      {label}
-    </button>
-  );
-};
+  variant = ButtonVariant.default,
+}) => (
+  <button
+    className={clsx("rounded-xl px-5 ml-2 h-10 font-medium  text-sm", {
+      "bg-[#ff5823] text-white hover:bg-[#f54813] ":
+        variant === ButtonVariant.default,
+      "border border-red-700 text-red-700 hover:bg-red-800 hover:text-white transition-all":
+        variant === ButtonVariant.danger,
+    })}
+    onClick={onClick}
+  >
+    {label}
+  </button>
+);

@@ -1,5 +1,5 @@
 import { api } from "../services/api";
-import { Crawl } from "../models/request";
+import { Crawl } from "../models/crawl";
 
 type CreateCrawlParams = {
   keyword: string;
@@ -9,11 +9,11 @@ type CreateCrawlResponse = {
   id: string;
 };
 
-type GetRequestParams = {
+type GetCrawlParams = {
   keyword_id: string;
 };
 
-export const createRequest = async ({
+export const createCrawl = async ({
   keyword,
 }: CreateCrawlParams): Promise<CreateCrawlResponse> => {
   const { data } = await api.post<CreateCrawlResponse>("/crawl", {
@@ -23,9 +23,9 @@ export const createRequest = async ({
   return data;
 };
 
-export const getRequest = async ({
+export const getCrawl = async ({
   keyword_id,
-}: GetRequestParams): Promise<Crawl> => {
+}: GetCrawlParams): Promise<Crawl> => {
   const { data } = await api.get<Crawl>(`/crawl/${keyword_id}`);
 
   return data;

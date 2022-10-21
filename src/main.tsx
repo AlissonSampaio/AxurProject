@@ -6,20 +6,22 @@ import {
   QueryClientProvider,
   useQuery,
 } from "@tanstack/react-query";
-import HomePage from "./pages/Home/homePage";
-import Dashboard from "./pages/RequestDashboard/dashboard";
+import { CrawlDetails } from "./routes/crawlDetails";
 import "./styles/global.css";
+import Root from "./routes/root";
 
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
-  },
-  {
-    path: "/dashboard",
-    element: <Dashboard />,
+    element: <Root />,
+    children: [
+      {
+        path: "/crawl/:id",
+        element: <CrawlDetails />,
+      },
+    ],
   },
 ]);
 
