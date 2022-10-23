@@ -4,6 +4,9 @@ import { Skeleton } from "../components/skeleton";
 import { getCrawl } from "../repositories/crawlRepository";
 import { useSnapshot } from "valtio";
 import { store } from "../store/store";
+import { CrawlUrl } from "../components/crawlUrl";
+import { CrawlStatus } from "../models/crawl";
+import clsx from "clsx";
 
 export const CrawlDetails = () => {
   const { id } = useParams();
@@ -22,42 +25,46 @@ export const CrawlDetails = () => {
   )?.keyword;
 
   return (
-    <div className="p-4 flex flex-col max-h-screen overflow-hidden">
-      {isLoading ? (
-        <Skeleton className="h-5 m-2 w-40" />
-      ) : (
-        <p className="">Id: {data?.id}</p>
-      )}
-
-      {keyword &&
-        (isLoading ? (
+    <div className="flex flex-col w-full overflow-hidden">
+      <div className="w-full p-6 flex flex-row items-center justify-between h-[4.75rem] border-b-2 bg-[#FAFAFA]">
+        {isLoading ? (
           <Skeleton className="h-5 m-2 w-40" />
         ) : (
-          <p>Termo de pesquisa: {keyword}</p>
-        ))}
+          <h2 className="text-gray-600">{data?.id}</h2>
+        )}
+        {isLoading ? (
+          <Skeleton className="h-5 m-2 w-40" />
+        ) : (
+          <span
+            className={clsx("text-2xl", {
+              "text-[#FF5823]": data?.status === CrawlStatus.active,
+              "text-[#22c55e]": data?.status === CrawlStatus.done,
+            })}
+          >
+            {data?.status}
+          </span>
+        )}
+      </div>
 
-      {isLoading ? (
-        <Skeleton className="h-5 m-2 w-40" />
-      ) : (
-        <p className="">Status: {data.status}</p>
+      {keyword && (
+        <div className="w-full p-3 justify-center items-center flex border-b-2">
+          {isLoading ? (
+            <Skeleton className="h-5 m-2 w-40" />
+          ) : (
+            <p className="font-bold">{keyword}</p>
+          )}
+        </div>
       )}
 
       {isLoading ? (
         <Skeleton className="h-5 m-2 w-40" />
       ) : (
-        <div className="flex flex-1 flex-col  overflow-hidden">
-          <p className="">Resultados: </p>
-          <div className="flex flex-1 flex-col  overflow-y-scroll">
-            <ul className=" ">
-              {data.urls.map((url) => (
-                <li className="p-2">
-                  <a target="_blank" rel="noopener noreferrer" href={url}>
-                    {url}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="flex flex-1 flex-col  overflow-y-scroll">
+          <ul className=" ">
+            {data.urls.map((url) => (
+              <CrawlUrl url={url} />
+            ))}
+          </ul>
         </div>
       )}
     </div>

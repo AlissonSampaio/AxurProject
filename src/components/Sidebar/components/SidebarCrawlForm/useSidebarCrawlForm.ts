@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { createCrawl } from "../../repositories/crawlRepository";
-import { store } from "../../store/store";
+import { createCrawl } from "../../../../repositories/crawlRepository";
+import { store } from "../../../../store/store";
 import axios from "axios";
 
 export default () => {

@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { useSnapshot } from "valtio";
-import { store } from "../store/store";
-import { Button, ButtonVariant } from "./button";
-import { RequestedCrawlItem } from "./requestedCrawlItem";
+import { store } from "../../../store/store";
+import { Button, ButtonVariant } from "../../button";
+import { RequestedCrawlItem } from "../../requestedCrawlItem";
 
 export const SidebarCrawlList = () => {
   const storeSnapshot = useSnapshot(store);
